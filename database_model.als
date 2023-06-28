@@ -34,3 +34,15 @@ fact {
 assert desiredProperty {
     all c: Classes | #c.students >= 2
 }
+
+assert eachStudentEnrolled {
+    all s: Student | some c: Classes | s in c.students
+}
+
+assert uniqueTeacher {
+    all c: Classes | lone c.teacher
+}
+
+assert noDuplicateStudents {
+    all c: Classes | no disj s1, s2: c.students | s1 = s2
+}

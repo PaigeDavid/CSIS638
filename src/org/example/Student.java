@@ -13,16 +13,19 @@ public class Student {
     private String name;
     private String email;
 
+    //Represents a many-to-many relationship between students and classes
     @ManyToMany
     @JoinTable(name = "registrations",
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "class_id"))
     private List<Classes> classes;
 
+    //Default constructor
     public Student() {
         this.classes = new ArrayList<>();
     }
 
+    //Constructor with parameters
     public Student(String id, String name, String email) {
         this.id = id;
         this.name = name;
@@ -30,6 +33,7 @@ public class Student {
         this.classes = new ArrayList<>();
     }
 
+    //Getter and setter methods for the classes field
     public List<Classes> getClasses() {
         return classes;
     }
@@ -38,6 +42,7 @@ public class Student {
         this.classes = classes;
     }
 
+    //Provide a string representation of the object
     @Override
     public String toString() {
         return "Student{" +
@@ -47,6 +52,7 @@ public class Student {
                 '}';
     }
 
+    //Getter method for the student's ID
     public String getId() {
         return id;
     }

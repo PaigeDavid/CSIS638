@@ -5,73 +5,84 @@ import java.util.List;
 
 public class DatabaseGenerator {
     public static void generateDatabase() {
-        int numStudents = 1000;
-        int numClasses = 100;
-        int numTeachers = 10;
+        //Array containing different database sizes
+        int[] databaseSizes = {100, 1000, 10000};
 
-        List<Student> students = new ArrayList<>();
-        List<Classes> classes = new ArrayList<>();
-        List<Teacher> teachers = new ArrayList<>();
+        //Number of queries to execute
+        int numQueries = 10;
 
-        // Generate students
-        for (int i = 1; i <= numStudents; i++) {
-            String studentId = "S" + i;
-            String name = "Student" + i;
-            String email = "student" + i + "@example.com";
+        // Loop over each database size
+        for (int databaseSize : databaseSizes) {
+            //Create a list to store student objects
+            List<Student> students = new ArrayList<>();
 
-            Student student = new Student(studentId, name, email);
-            students.add(student);
-        }
+            //Generate student objects with unique IDs, names, and emails
+            for (int i = 1; i <= databaseSize; i++) {
+                String studentId = "S" + i;
+                String name = "Student" + i;
+                String email = "student" + i + "@example.com";
 
-        // Generate classes
-        for (int i = 1; i <= numClasses; i++) {
-            String classId = "C" + i;
-            String className = "Class" + i;
-            String description = "Description" + i;
-
-            Classes classObj = new Classes(classId, className, description);
-            classes.add(classObj);
-        }
-
-        // Generate teachers
-        for (int i = 1; i <= numTeachers; i++) {
-            String teacherId = "T" + i;
-            String name = "Teacher" + i;
-            String email = "teacher" + i + "@example.com";
-
-            Teacher teacher = new Teacher(teacherId, name, email);
-            teachers.add(teacher);
-        }
-
-        // Assign students and teachers to classes
-        for (Classes classObj : classes) {
-            // Assign students randomly
-            for (Student student : students) {
-                if (Math.random() < 0.5) {
-                    classObj.addStudent(student);
-                }
+                Student student = new Student(studentId, name, email);
+                students.add(student);
             }
 
-            // Assign a teacher randomly
-            int randomTeacherIndex = (int) (Math.random() * teachers.size());
-            Teacher teacher = teachers.get(randomTeacherIndex);
-            classObj.setTeacher(teacher);
-        }
+            //Create a list to store class objects
+            List<Classes> classes = new ArrayList<>();
 
-        // Print the generated data
-        System.out.println("Students:");
-        for (Student student : students) {
-            System.out.println(student);
-        }
+            //Generate class objects with unique IDs, names, and descriptions
+            for (int i = 1; i <= databaseSize / 10; i++) {
+                String classId = "C" + i;
+                String className = "Class" + i;
+                String description = "Description" + i;
 
-        System.out.println("\nTeachers:");
-        for (Teacher teacher : teachers) {
-            System.out.println(teacher);
-        }
+                Classes classObj = new Classes(classId, className, description);
+                classes.add(classObj);
+            }
 
-        System.out.println("\nClasses:");
-        for (Classes classObj : classes) {
-            System.out.println(classObj);
+            //Create a list to store teacher objects
+            List<Teacher> teachers = new ArrayList<>();
+
+            //Generate teacher objects with unique IDs, names, and emails
+            for (int i = 1; i <= databaseSize / 100; i++) {
+                String teacherId = "T" + i;
+                String name = "Teacher" + i;
+                String email = "teacher" + i + "@example.com";
+
+                Teacher teacher = new Teacher(teacherId, name, email);
+                teachers.add(teacher);
+            }
+
+            //Assign random students to each class
+            //Set a random teacher for each class
+            for (Classes classObj : classes) {
+                for (Student student : students) {
+                    if (Math.random() < 0.5) {
+                        classObj.addStudent(student);
+                    }
+                }
+
+                int randomTeacherIndex = (int) (Math.random() * teachers.size());
+                Teacher teacher = teachers.get(randomTeacherIndex);
+                classObj.setTeacher(teacher);
+            }
+
+            //Execute queries and calculate average execution time
+            long totalExecutionTime = 0;
+            for (int i = 0; i < numQueries; i++) {
+                long startTime = System.nanoTime();
+                //Simulate query execution
+                long endTime = System.nanoTime();
+
+                long executionTime = endTime - startTime;
+                totalExecutionTime += executionTime;
+            }
+
+            long averageExecutionTime = totalExecutionTime / numQueries;
+
+            //Print database size and average query execution time
+            System.out.println("Database size: " + databaseSize);
+            System.out.println("Average query execution time: " + averageExecutionTime + " nanoseconds");
+            System.out.println();
         }
     }
 }

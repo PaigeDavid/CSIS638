@@ -11,12 +11,14 @@ public class Teacher {
     private String name;
     private String email;
 
+    //Constructor with parameters
     public Teacher(String id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
     }
 
+    //Provide a string representation of the object
     @Override
     public String toString() {
         return "Teacher{" +
@@ -25,5 +27,4 @@ public class Teacher {
                 ", email='" + email + '\'' +
                 '}';
     }
-
 }

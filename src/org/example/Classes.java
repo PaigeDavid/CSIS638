@@ -19,6 +19,7 @@ public class Classes {
     @ManyToOne
     private Teacher teacher;
 
+    //Constructor with parameters
     public Classes(String id, String title, String description) {
         this.id = id;
         this.title = title;
@@ -26,11 +27,13 @@ public class Classes {
         this.students = new ArrayList<>();
     }
 
+    //Add a student to the class
     public void addStudent(Student student) {
         students.add(student);
         student.getClasses().add(this);
     }
 
+    //Getters and setters
     public String getId() {
         return id;
     }
@@ -71,6 +74,7 @@ public class Classes {
         this.teacher = teacher;
     }
 
+    //Provide a string representation of the object
     @Override
     public String toString() {
         return "Classes{" +

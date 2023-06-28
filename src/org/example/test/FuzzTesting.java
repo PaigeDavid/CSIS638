@@ -18,6 +18,7 @@ public class FuzzTesting {
         List<Classes> classes = new ArrayList<>();
         List<Teacher> teachers = new ArrayList<>();
 
+        //Generate student objects with fuzzed names and emails
         for (int i = 1; i <= numStudents; i++) {
             String studentId = "S" + i;
             String name = fuzzName("Student" + i);
@@ -27,6 +28,7 @@ public class FuzzTesting {
             students.add(student);
         }
 
+        //Generate class objects with fuzzed names and descriptions
         for (int i = 1; i <= numClasses; i++) {
             String classId = "C" + i;
             String className = fuzzString("Class" + i);
@@ -36,6 +38,7 @@ public class FuzzTesting {
             classes.add(classObj);
         }
 
+        //Generate teacher objects with fuzzed names and emails
         for (int i = 1; i <= numTeachers; i++) {
             String teacherId = "T" + i;
             String name = fuzzName("Teacher" + i);
@@ -46,6 +49,9 @@ public class FuzzTesting {
         }
 
         Random random = new Random();
+
+        //Assign random students to each class
+        //Set a random teacher for each class
         for (Classes classObj : classes) {
             for (Student student : students) {
                 if (random.nextDouble() < 0.5) {
@@ -58,6 +64,7 @@ public class FuzzTesting {
             classObj.setTeacher(teacher);
         }
 
+        //Print generated objects for debugging purposes
         System.out.println("Students:");
         for (Student student : students) {
             System.out.println(student);
@@ -73,6 +80,7 @@ public class FuzzTesting {
             System.out.println(classObj);
         }
 
+        //Run fuzz testing
         runFuzzTesting(students, classes, teachers);
     }
 
@@ -89,6 +97,7 @@ public class FuzzTesting {
     }
 
     public static void runFuzzTesting(List<Student> students, List<Classes> classes, List<Teacher> teachers) {
+        //Check if the student count matches the expected count
         boolean studentCountPassed = checkStudentCount(students);
         if (!studentCountPassed) {
             System.out.println("Fuzz testing failed: Incorrect student count");
@@ -96,6 +105,7 @@ public class FuzzTesting {
             System.out.println("Fuzz testing passed: Correct student count");
         }
 
+        //Check if the class count matches the expected count
         boolean classCountPassed = checkClassCount(classes);
         if (!classCountPassed) {
             System.out.println("Fuzz testing failed: Incorrect class count");
@@ -103,6 +113,7 @@ public class FuzzTesting {
             System.out.println("Fuzz testing passed: Correct class count");
         }
 
+        //Check if the teacher count matches the expected count
         boolean teacherCountPassed = checkTeacherCount(teachers);
         if (!teacherCountPassed) {
             System.out.println("Fuzz testing failed: Incorrect teacher count");
